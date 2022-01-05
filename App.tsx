@@ -46,14 +46,14 @@ export default function App() {
     ['appturistico',	'QML',	'App',	'11/10/2020', '10/05/2021'],
     ['appturistico',	'QML',	'App',	'11/10/2020', '10/05/2021'],
     ['appturistico',	'QML',	'App',	'11/10/2020', '10/05/2021'],
-    ['appturistico',	'QML',	'App',	'11/10/2020', '10/05/2021'],
-    ['appturistico',	'QML',	'App',	'11/10/2020', '10/05/2021'],
-    ['appturistico',	'QML',	'App',	'11/10/2020', '10/05/2021'],
-    ['appturistico',	'QML',	'App',	'11/10/2020', '10/05/2021'],
-    ['appturistico',	'QML',	'App',	'11/10/2020', '10/05/2021'],
-    ['appturistico',	'QML',	'App',	'11/10/2020', '10/05/2021'],
-    ['appturistico',	'QML',	'App',	'11/10/2020', '10/05/2021'],
   ];
+
+  const repositoyData = []
+
+  repositories?.map(repo => (
+    repositoyData.push([repo.name, repo.language, repo.description, repo.created_at, repo.updated_at])
+  ))
+
   const widthArr = [110, 90, 140, 100, 120];
 
   useEffect(() => {
@@ -127,12 +127,12 @@ export default function App() {
               <ScrollView>
                 <Table  borderStyle={{borderWidth: 1, borderColor: '#c8e1ff'}}>
                   <Row data={tableHead} style={styles.headTable} widthArr={widthArr} textStyle={{color: '#0C1441',textAlign: 'center'}}/>
+{/*                   <Row data={['appturistico',	'QML',	'App',	'11/10/2020', '10/05/2021']} textStyle={{color: '#6B7379', margin: 6, textAlign: 'center'}} widthArr={widthArr}/> */}
+                  <Rows data={repositoyData} textStyle={{color: '#6B7379', margin: 6, textAlign: 'center'}} widthArr={widthArr}/>
+{/*                   {repositories?.map(repo => (
+                    <Row key={repo.id} widthArr={widthArr} data={ repo.name == null ? [' ',' ',' ',' ',' '] : [repo.name, repo.language, repo.description, repo.created_at, repo.updated_at]}/>
+                  ))}   */}
 
-                  {repositories?.map(repo => (
-                    <Row key={repo.id} widthArr={widthArr} data={[repo.name, repo.language, repo.description, repo.created_at, repo.updated_at]}/>
-                  ))}
-
-                  {/* <Row data={['appturistico',	'QML',	'App',	'11/10/2020', '10/05/2021']} textStyle={{color: '#6B7379', margin: 6, textAlign: 'center'}} widthArr={widthArr}/> */}
                 </Table>
               </ScrollView>
               
