@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, StatusBar, Modal, ScrollView } from 'react-native';
 import { Table, TableWrapper, Row, Rows } from 'react-native-table-component';
+import moment from 'moment';
 
 import { TextArea } from './src/components/TextArea';
 import { ButtonSearch } from './src/components/ButtonSearch'
@@ -37,21 +38,15 @@ export default function App() {
   const [openDetails, setOpenDetails] = useState(false);
   const [firstClick, setFirstClick] = useState(true);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+  
+  moment.locale('en');
 
   const tableHead = ['Name', 'Languages', 'Description', 'Created at', 'Updated at'];
-  const reposExample = [
-    ['appturistico',	'QML',	'App geoturístico para UFPA',	'11/10/2020', '10/05/2021'],
-    ['appturistico',	'QML',	'App',	'11/10/2020', '10/05/2021'],
-    ['appturistico',	'QML',	'App',	'11/10/2020', '10/05/2021'],
-    ['appturistico',	'QML',	'App',	'11/10/2020', '10/05/2021'],
-    ['appturistico',	'QML',	'App',	'11/10/2020', '10/05/2021'],
-    ['appturistico',	'QML',	'App',	'11/10/2020', '10/05/2021'],
-  ];
+  const repositoyData = [];
 
-  const repositoyData = []
 
   repositories?.map(repo => (
-    repositoyData.push([repo.name, repo.language, repo.description, repo.created_at, repo.updated_at])
+    repositoyData.push([repo.name, repo.language, repo.description, moment(repo.created_at).format('DD/MM/YYYY'), moment(repo.updated_at).format('DD/MM/YYYY')])
   ))
 
   const widthArr = [110, 90, 140, 100, 120];
@@ -127,12 +122,7 @@ export default function App() {
               <ScrollView>
                 <Table  borderStyle={{borderWidth: 1, borderColor: '#c8e1ff'}}>
                   <Row data={tableHead} style={styles.headTable} widthArr={widthArr} textStyle={{color: '#0C1441',textAlign: 'center'}}/>
-{/*                   <Row data={['appturistico',	'QML',	'App',	'11/10/2020', '10/05/2021']} textStyle={{color: '#6B7379', margin: 6, textAlign: 'center'}} widthArr={widthArr}/> */}
                   <Rows data={repositoyData} textStyle={{color: '#6B7379', margin: 6, textAlign: 'center'}} widthArr={widthArr}/>
-{/*                   {repositories?.map(repo => (
-                    <Row key={repo.id} widthArr={widthArr} data={ repo.name == null ? [' ',' ',' ',' ',' '] : [repo.name, repo.language, repo.description, repo.created_at, repo.updated_at]}/>
-                  ))}   */}
-
                 </Table>
               </ScrollView>
               
