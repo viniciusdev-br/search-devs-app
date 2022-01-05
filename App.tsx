@@ -1,10 +1,11 @@
-import { Image, StyleSheet, Text, View, StatusBar, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, Modal } from 'react-native';
 
 import { TextArea } from './src/components/TextArea';
 import { ButtonSearch } from './src/components/ButtonSearch'
 import { useState, useEffect } from 'react';
 import { api } from './src/services/api';
 import { Card } from './src/components/Card';
+import { DetailsCard } from './src/components/DetailsCard';
 
 interface UserType {
     avatar_url: string,
@@ -45,7 +46,22 @@ export default function App() {
     .catch((error) => {
         console.log(error)
     });
-}, [sending]); 
+  }, [sending]); 
+
+  useEffect(() => {
+    api.get("/users/" + nickname + "/repos")
+    .then((response) => {
+      setRespositories(response.data);
+      setOpenDetails(false);
+    })
+    .catch((error) => {
+      console.log('Erro encontrado: ' + error);
+    });
+  }, [openDetails])
+
+  function handleCloseProfileModal() {
+    setIsProfileModalOpen(false);
+  }
 
   return (
     <View style={styles.container}>
@@ -70,26 +86,25 @@ export default function App() {
         }/>
       </View>
 
-      <Card onPress={() => alert("Deu certo jogador, parabéns")} name={user?.name} avatar_url={user?.avatar_url} login={user?.login} location={user?.location}/>
+      <Card 
+        onPress={() => {
+          setIsProfileModalOpen(true);
+          setOpenDetails(true);
+        }} 
+        name={user?.name} avatar_url={user?.avatar_url} login={user?.login} location={user?.location}
+      />
 
-{/*       <View style={styles.containerInput}>
-        <TouchableOpacity style={{flex: 1, marginRight: 13}}>
-          <Image source={{ uri: user?.avatar_url }} style={styles.stretch} />
-        </TouchableOpacity>
-        
-        <View style={{flex: 1, flexDirection: 'column'}}>
-          <Text style={{flexDirection: 'column', flexWrap: 'wrap',fontSize: 40, color: '#FFF'}}>
-            {user?.name}
-          </Text>
-          <Text style={{fontSize: 10, color: '#FFF'}}>Login</Text>
-          <Text style={{fontSize: 14, color: '#FFF', marginBottom: 20}}>{user?.login}</Text>          
-          <Text style={{fontSize: 10, color: '#FFF'}}>Address</Text>
-          <Text style={{fontSize: 14, color: '#FFF'}}>{user?.location}</Text>  
+      <Modal
+        animationType="slide"
+        visible={isProfileModalOpen}
+        onRequestClose={handleCloseProfileModal}
+      >
+        <View style={styles.container}>
+          <DetailsCard 
+          name={user?.name} avatar_url={user?.avatar_url} login={user?.login} location={user?.location} id={user?.id} followers={user?.followers} public_repos={user?.public_repos} />
         </View>
-          
-      </View> */}
-
-
+      </Modal>
+    
     </View>
   );
 }
@@ -115,9 +130,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#FFF'
   },
-  stretch: {
-    width: 166,
-    height: 249.15,
-    borderRadius: 10
-  }
 });

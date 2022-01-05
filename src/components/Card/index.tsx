@@ -1,3 +1,4 @@
+import React from 'react';
 import {View, Text, TouchableOpacity, Image, TouchableOpacityProps} from 'react-native'
 import {styles} from './styles'
 
