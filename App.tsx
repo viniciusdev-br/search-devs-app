@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, StatusBar, Modal, ScrollView } from 'react-native';
-import { Table, TableWrapper, Row, Rows } from 'react-native-table-component';
+import { Table, Row, Rows } from 'react-native-table-component';
 import moment from 'moment';
 
 import { TextArea } from './src/components/TextArea';
