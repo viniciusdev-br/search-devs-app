@@ -1,4 +1,5 @@
-import { StyleSheet, Text, View, StatusBar, Modal } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, Modal, ScrollView } from 'react-native';
+import { Table, TableWrapper, Row, Rows } from 'react-native-table-component';
 
 import { TextArea } from './src/components/TextArea';
 import { ButtonSearch } from './src/components/ButtonSearch'
@@ -36,6 +37,24 @@ export default function App() {
   const [openDetails, setOpenDetails] = useState(false);
   const [firstClick, setFirstClick] = useState(true);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+
+  const tableHead = ['Name', 'Languages', 'Description', 'Created at', 'Updated at'];
+  const reposExample = [
+    ['appturistico',	'QML',	'App geoturístico para UFPA',	'11/10/2020', '10/05/2021'],
+    ['appturistico',	'QML',	'App',	'11/10/2020', '10/05/2021'],
+    ['appturistico',	'QML',	'App',	'11/10/2020', '10/05/2021'],
+    ['appturistico',	'QML',	'App',	'11/10/2020', '10/05/2021'],
+    ['appturistico',	'QML',	'App',	'11/10/2020', '10/05/2021'],
+    ['appturistico',	'QML',	'App',	'11/10/2020', '10/05/2021'],
+    ['appturistico',	'QML',	'App',	'11/10/2020', '10/05/2021'],
+    ['appturistico',	'QML',	'App',	'11/10/2020', '10/05/2021'],
+    ['appturistico',	'QML',	'App',	'11/10/2020', '10/05/2021'],
+    ['appturistico',	'QML',	'App',	'11/10/2020', '10/05/2021'],
+    ['appturistico',	'QML',	'App',	'11/10/2020', '10/05/2021'],
+    ['appturistico',	'QML',	'App',	'11/10/2020', '10/05/2021'],
+    ['appturistico',	'QML',	'App',	'11/10/2020', '10/05/2021'],
+  ];
+  const widthArr = [110, 90, 140, 100, 120];
 
   useEffect(() => {
     api.get("/users/" + nickname)
@@ -102,6 +121,23 @@ export default function App() {
         <View style={styles.container}>
           <DetailsCard 
           name={user?.name} avatar_url={user?.avatar_url} login={user?.login} location={user?.location} id={user?.id} followers={user?.followers} public_repos={user?.public_repos} />
+
+          <View style={{flex: 1, width: '93%', backgroundColor: '#FFF', padding: 10, borderRadius: 10}}>
+            <ScrollView horizontal >
+              <ScrollView>
+                <Table  borderStyle={{borderWidth: 1, borderColor: '#c8e1ff'}}>
+                  <Row data={tableHead} style={styles.headTable} widthArr={widthArr} textStyle={{color: '#0C1441',textAlign: 'center'}}/>
+
+                  {repositories?.map(repo => (
+                    <Row key={repo.id} widthArr={widthArr} data={[repo.name, repo.language, repo.description, repo.created_at, repo.updated_at]}/>
+                  ))}
+
+                  {/* <Row data={['appturistico',	'QML',	'App',	'11/10/2020', '10/05/2021']} textStyle={{color: '#6B7379', margin: 6, textAlign: 'center'}} widthArr={widthArr}/> */}
+                </Table>
+              </ScrollView>
+              
+            </ScrollView>
+            </View>
         </View>
       </Modal>
     
@@ -129,5 +165,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     color: '#FFF'
+  },
+  headTable: { 
+    height: 40, 
+    backgroundColor: '#f1f8ff' 
   },
 });
