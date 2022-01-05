@@ -42,6 +42,7 @@ export default function App() {
   moment.locale('en');
 
   const tableHead = ['Name', 'Languages', 'Description', 'Created at', 'Updated at'];
+  // @ts-ignore
   const repositoyData = [];
 
 
@@ -122,6 +123,7 @@ export default function App() {
               <ScrollView>
                 <Table  borderStyle={{borderWidth: 1, borderColor: '#c8e1ff'}}>
                   <Row data={tableHead} style={styles.headTable} widthArr={widthArr} textStyle={{color: '#0C1441',textAlign: 'center'}}/>
+                  {/* @ts-ignore */}
                   <Rows data={repositoyData} textStyle={{color: '#6B7379', margin: 6, textAlign: 'center'}} widthArr={widthArr}/>
                 </Table>
               </ScrollView>
